@@ -104,9 +104,15 @@
       "Niveau d'étude visé : " + niveau + '\n' +
       'Faculté choisie : ' + faculte;
 
-    const win = window.open(waLink(message), '_blank', 'noopener');
-    if (!win) window.location.href = waLink(message); // si le navigateur bloque la nouvelle fenêtre
+    const link = waLink(message);
+
+    // Lien de secours affiché dans le message de succès
+    const retry = document.getElementById('wa-retry');
+    if (retry) retry.href = link;
 
     success.classList.remove('hidden');
     form.reset();
+
+    // Ouverture directe de WhatsApp : la méthode la plus fiable sur téléphone
+    window.location.href = link;
   });

@@ -47,12 +47,66 @@
   }, { threshold: 0.15 });
   revealEls.forEach(el => io.observe(el));
 
-  // Admission form (client-side only)
+  // ============ WHATSAPP ============
+  // Numéro de l'UPB au format international, sans « + » ni espaces (Mali = 223).
+  // Pour le changer, modifie seulement cette ligne.
+  const WHATSAPP_NUMBER = '22393316343';
+
+  function waLink(message){
+    return 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+  }
+
+  // Boutons « Écrire sur WhatsApp » (flottant + section contact)
+  const hello = "Bonjour, je souhaite avoir des informations sur l'UPB Ségou.";
+  ['wa-float', 'wa-contact'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.href = waLink(hello);
+  });
+
+  // Formulaire d'admission : ouvre WhatsApp avec la candidature déjà écrite
   const form = document.getElementById('admission-form');
   const success = document.getElementById('form-success');
+
+  const errorBox = document.createElement('p');
+  errorBox.className = 'form-error hidden';
+  errorBox.setAttribute('role', 'alert');
+  form.appendChild(errorBox);
+
+  function showError(text){
+    errorBox.textContent = text;
+    errorBox.classList.remove('hidden');
+    success.classList.add('hidden');
+  }
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+    errorBox.classList.add('hidden');
+
     if (!form.checkValidity()){ form.reportValidity(); return; }
+
+    const data = new FormData(form);
+    const nom = String(data.get('nom')).trim();
+    const prenom = String(data.get('prenom')).trim();
+    const telephone = String(data.get('telephone')).trim();
+    const niveau = data.get('niveau');
+    const faculte = data.get('faculte');
+
+    if (telephone.replace(/\D/g, '').length < 8){
+      showError('Entrez un numéro de téléphone valide (8 chiffres minimum).');
+      return;
+    }
+
+    const message =
+      "Bonjour, je souhaite déposer ma candidature à l'UPB Ségou (2026-2027).\n\n" +
+      'Nom : ' + nom + '\n' +
+      'Prénom : ' + prenom + '\n' +
+      'Téléphone : ' + telephone + '\n' +
+      "Niveau d'étude visé : " + niveau + '\n' +
+      'Faculté choisie : ' + faculte;
+
+    const win = window.open(waLink(message), '_blank', 'noopener');
+    if (!win) window.location.href = waLink(message); // si le navigateur bloque la nouvelle fenêtre
+
     success.classList.remove('hidden');
-    form.querySelectorAll('input, select, button[type="submit"]').forEach(el => el.disabled = true);
+    form.reset();
   });

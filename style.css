@@ -1,0 +1,123 @@
+  :root{
+    --ink:#16264F;
+    --ink-soft:#2A3B6B;
+    --gold:#B4842A;
+    --gold-light:#D9A84D;
+    --cream:#FAF6EE;
+    --cream-deep:#F1E9D8;
+    --paper:#FFFFFF;
+    --f1:#2C90CC; /* Gestion & Economie — bleu vif */
+    --f2:#C67C3A; /* Administratif / Juridique — orange/brun */
+    --f3:#1B3E73; /* Technique — bleu marine profond */
+    --f4:#239B46; /* Rural — vert vif */
+    --sky:#CDE9F6;
+    --sky-mid:#9FD3E8;
+    --sky-deep:#6FB8D6;
+    --leaf:#2E7D46;
+    --wood:#8a6a3f;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Poppins', system-ui, sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    overflow-x:hidden;
+    font-weight:500;
+  }
+  .font-display{ font-family:'Poppins', system-ui, sans-serif; }
+  .text-ink{ color:var(--ink); }
+  .text-gold{ color:var(--gold); }
+  .bg-ink{ background-color:var(--ink); }
+  .bg-cream{ background-color:var(--cream); }
+  .bg-cream-deep{ background-color:var(--cream-deep); }
+  .border-gold{ border-color:var(--gold); }
+
+  .reveal{ opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+
+  header.scrolled{ box-shadow:0 8px 30px -18px rgba(22,38,79,.35); }
+  header.scrolled #header-inner{ padding-top:.6rem; padding-bottom:.6rem; }
+
+  .nav-link{ position:relative; }
+  .nav-link::after{
+    content:""; position:absolute; left:0; bottom:-4px; height:2px; width:0%;
+    background:var(--gold); transition:width .25s ease;
+  }
+  .nav-link:hover::after{ width:100%; }
+
+  .cta-gold{
+    background:var(--gold); color:#fff;
+    transition:transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+  }
+  .cta-gold:hover{ background:var(--ink); transform:translateY(-2px); box-shadow:0 14px 24px -12px rgba(22,38,79,.45); }
+
+  .cta-outline{
+    border:1.5px solid var(--ink); color:var(--ink);
+    transition:all .2s ease;
+  }
+  .cta-outline:hover{ background:var(--ink); color:#fff; }
+
+  .faculty-card{
+    transition:border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+    border:1px solid #e7ded0;
+  }
+  .faculty-card:hover{ transform:translateY(-3px); box-shadow:0 20px 40px -22px rgba(22,38,79,.28); }
+
+  .tab-btn{ position:relative; }
+  .tab-btn.active{ color:var(--ink); }
+  .tab-btn.active::after{
+    content:""; position:absolute; left:0; right:0; bottom:-1px; height:3px; background:var(--gold);
+    border-radius:2px 2px 0 0;
+  }
+
+  .fac-block{ border:1px solid #e7ded0; }
+  .price-chip{ border:1px solid #e7ded0; background:#fff; }
+
+  .check-item svg{ flex-shrink:0; }
+
+  input:focus, select:focus{ outline:none; box-shadow:0 0 0 3px rgba(180,132,42,.3); border-color:var(--gold); }
+
+  ::-webkit-scrollbar{ width:10px; }
+  ::-webkit-scrollbar-track{ background:#efe7d8; }
+  ::-webkit-scrollbar-thumb{ background:#d8c9a8; border-radius:6px; }
+
+  .crest-ring{ stroke:var(--ink); }
+  .crest-gold{ fill:var(--gold); }
+  .logo-real{ background-image:url(logo.png); background-size:contain; background-repeat:no-repeat; background-position:center; }
+
+  /* ---- Decorative floating watermarks & patterns ---- */
+  .dot-grid{
+    background-image:radial-gradient(circle, rgba(22,38,79,.16) 1px, transparent 1.4px);
+    background-size:22px 22px;
+  }
+  .dot-grid-light{
+    background-image:radial-gradient(circle, rgba(255,255,255,.18) 1px, transparent 1.4px);
+    background-size:24px 24px;
+  }
+  .watermark{
+    position:absolute; pointer-events:none; user-select:none; z-index:0;
+  }
+  @keyframes floatY{
+    0%,100%{ transform:translateY(0) rotate(var(--rot,0deg)); }
+    50%{ transform:translateY(-22px) rotate(var(--rot,0deg)); }
+  }
+  @keyframes floatYSlow{
+    0%,100%{ transform:translateY(0) rotate(var(--rot,0deg)); }
+    50%{ transform:translateY(-14px) rotate(var(--rot,0deg)); }
+  }
+  @keyframes spinSlow{
+    from{ transform:rotate(0deg); } to{ transform:rotate(360deg); }
+  }
+  .float-a{ animation:floatY 8s ease-in-out infinite; }
+  .float-b{ animation:floatYSlow 11s ease-in-out infinite; animation-delay:-3s; }
+  .float-c{ animation:floatY 9.5s ease-in-out infinite; animation-delay:-5s; }
+  .spin-slow{ animation:spinSlow 60s linear infinite; }
+
+  .leaf-line{ stroke:var(--gold); fill:none; }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ transition:none; opacity:1; transform:none; }
+    html{ scroll-behavior:auto; }
+    .float-a, .float-b, .float-c, .spin-slow{ animation:none; }
+  }
